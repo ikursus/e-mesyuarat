@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MesyuaratController extends Controller
 {
@@ -37,10 +38,17 @@ class MesyuaratController extends Controller
             'masa_mula' => ['required', 'date_format:H:i'],
             'masa_tamat' => ['required'],
             'lokasi' => ['required'],
+            'ahli' => ['required'],
             'status' => ['required', 'in:aktif,batal,tunda,selesai'],
         ]);
 
-        dd($data);
+        // dd($data);
+        // Simpan $data dari validation ke dalam table mesyuarat
+        DB::table('mesyuarat')->insert($data);
+
+        // Redirect ke halaman senarai mesyuarat selepas proses kemasukan data.
+        return redirect()->route('mesyuarat.index');
+
     }
 
     /**
