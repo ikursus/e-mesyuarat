@@ -13,7 +13,11 @@ class LoginController extends Controller
 
     }
 
-    function checkLogin() {
-        return 'Anda berjaya login';
+    function checkLogin(Request $request) {
+
+        // return $_POST['email'];
+        //return $request->input('email');
+        return $request->all();
+
     }
 }

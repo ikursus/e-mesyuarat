@@ -31,7 +31,16 @@ class MesyuaratController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'perkara' => 'required|min:3|string', // cara 1 penyediaan validation rules - guna tiang
+            'tarikh' => ['required', 'date'], // cara 2 penyediaan validation rules - guna array
+            'masa_mula' => ['required', 'date_format:H:i'],
+            'masa_tamat' => ['required'],
+            'lokasi' => ['required'],
+            'status' => ['required', 'in:aktif,batal,tunda,selesai'],
+        ]);
+
+        dd($data);
     }
 
     /**
