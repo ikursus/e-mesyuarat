@@ -14,8 +14,8 @@
             </a>
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="/mesyuarat">Senarai</a>
-                    <a class="nav-link" href="/mesyuarat/add">Tambah Rekod</a>
+                    <a class="nav-link" href="{{ route('mesyuarat.index') }}">Senarai</a>
+                    <a class="nav-link" href="{{ route('mesyuarat.create') }}">Tambah Rekod</a>
                 </nav>
             </div>
             <div class="sb-sidenav-menu-heading">Akaun</div>
