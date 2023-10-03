@@ -9,6 +9,10 @@ class MesyuaratController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function senarai()
+    // {
+    //     return view('mesyuarat.template-senarai');
+    // }
     public function index()
     {
         return view('mesyuarat.template-senarai');

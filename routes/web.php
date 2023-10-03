@@ -29,4 +29,8 @@ Route::get('dashboard', DashboardController::class);
 // Route::get('mesyuarat/{id}', [MesyuaratController::class, 'show'])->name('mesyuarat.show');
 // Route::delete('mesyuarat/{id}', [MesyuaratController::class, 'destroy'])->name('mesyuarat.destroy');
 
+// Jika salah 1 function tidak gunakan resource, pastikan route untuk function tersebut
+// berada di atas route resource supaya tidak di overwrite
+// Route::get('mesyuarat', [MesyuaratController::class, 'senarai'])->name('mesyuarat.index');
+// Route::resource('mesyuarat', MesyuaratController::class)->except('index');
 Route::resource('mesyuarat', MesyuaratController::class);
