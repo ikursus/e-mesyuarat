@@ -16,7 +16,11 @@ class MesyuaratController extends Controller
     // }
     public function index()
     {
-        return view('mesyuarat.template-senarai');
+        $senaraiMesyuarat = DB::table('mesyuarat')->orderBy('id', 'desc')->get();
+
+        // dd($senaraiMesyuarat);
+
+        return view('mesyuarat.template-senarai', compact('senaraiMesyuarat'));
     }
 
     /**
@@ -44,10 +48,11 @@ class MesyuaratController extends Controller
 
         // dd($data);
         // Simpan $data dari validation ke dalam table mesyuarat
+        // Query Builder proses memasukkan data
         DB::table('mesyuarat')->insert($data);
 
         // Redirect ke halaman senarai mesyuarat selepas proses kemasukan data.
-        return redirect()->route('mesyuarat.index');
+        return redirect()->route('mesyuarat.index')->with('mesej-sukses', 'Rekod berjaya disimpan');
 
     }
 
@@ -56,7 +61,9 @@ class MesyuaratController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $mesyuarat = DB::table('mesyuarat')->where('id', '=', $id)->first(); // LIMIT 1
+
+        return view('mesyuarat.template-detail', compact('mesyuarat'));
     }
 
     /**

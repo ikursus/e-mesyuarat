@@ -9,7 +9,11 @@
         </ol>
 
         <form method="POST" action="{{ route('mesyuarat.store') }}">
+
         @csrf
+        {{ csrf_field() }}
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
