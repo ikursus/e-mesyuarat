@@ -72,8 +72,28 @@
 
                 @include('layouts.alerts')
 
+                <!-- Button trigger modal -->
                 <div class="mt-3">
-                    <button type="submit" class="btn btn-primary">Tambah Ahli</button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-ahli">Tambah Ahli</button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="tambah-ahli" tabindex="-1" aria-labelledby="tambah-ahliLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="tambah-ahliLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        ...
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                    </div>
                 </div>
 
             </div>

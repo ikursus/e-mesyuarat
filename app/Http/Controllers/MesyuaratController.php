@@ -62,6 +62,8 @@ class MesyuaratController extends Controller
     {
         $mesyuarat = DB::table('mesyuarat')->where('id', '=', $id)->first(); // LIMIT 1
 
+        
+
         return view('mesyuarat.template-detail', compact('mesyuarat'));
     }
 
