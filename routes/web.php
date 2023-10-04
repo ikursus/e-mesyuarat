@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MesyuaratAhliController;
 use App\Http\Controllers\MesyuaratController;
 
 Route::get('/', function () {
@@ -33,4 +34,5 @@ Route::get('dashboard', DashboardController::class);
 // berada di atas route resource supaya function tersebut tidak di overwrite oleh resource
 // Route::get('mesyuarat', [MesyuaratController::class, 'senarai'])->name('mesyuarat.index');
 // Route::resource('mesyuarat', MesyuaratController::class)->except('index');
+Route::post('mesyuarat/{id}/ahli', [MesyuaratAhliController::class, 'store'])->name('mesyuarat.ahli.store');
 Route::resource('mesyuarat', MesyuaratController::class);

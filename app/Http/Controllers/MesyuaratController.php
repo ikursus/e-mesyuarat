@@ -62,9 +62,13 @@ class MesyuaratController extends Controller
     {
         $mesyuarat = DB::table('mesyuarat')->where('id', '=', $id)->first(); // LIMIT 1
 
-        
+        // Dropdown pilihan senarai ahli
+        $senaraiAhli = DB::table('users')->select('id', 'name')->get();
 
-        return view('mesyuarat.template-detail', compact('mesyuarat'));
+        // Senarai ahli yang telah berdaftar
+        $senaraiAhliMesyuarat = DB::table('mesyuarat_user')->get();
+
+        return view('mesyuarat.template-detail', compact('mesyuarat', 'senaraiAhli', 'senaraiAhliMesyuarat'));
     }
 
     /**

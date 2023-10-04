@@ -70,15 +70,13 @@
             </div>
             <div class="card-body">
 
-                @include('layouts.alerts')
-
                 <!-- Button trigger modal -->
                 <div class="mt-3">
                     <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-ahli">Tambah Ahli</button>
                 </div>
 
                 <!-- Modal -->
-                <form method="POST" action="">
+                <form method="POST" action="{{ route('mesyuarat.ahli.store', $mesyuarat->id) }}">
                     @csrf
                     <div class="modal fade" id="tambah-ahli" tabindex="-1" aria-labelledby="tambah-ahliLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -94,7 +92,7 @@
                                     <select class="form-control" name="user_id">
                                         <option value="">-- Sila Pilih --</option>
 
-                                        @foreach ($senaraiUser as $ahli)
+                                        @foreach ($senaraiAhli as $ahli)
                                         <option value="{{ $ahli->id }}">{{ $ahli->name }}</option>
                                         @endforeach
                                     </select>
@@ -102,13 +100,63 @@
 
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Tambah</button>
                             </div>
                         </div>
                         </div>
                     </div>
                 </form>
+
+
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAMA</th>
+                            <th>TINDAKAN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($senaraiAhliMesyuarat as $ahli)
+                        <tr>
+                            <td>{{ $ahli->id }}</td>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $ahli->id }}">Delete</button>
+
+                                <!-- Modal Delete -->
+                                <form method="POST" action="">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <div class="modal fade" id="modal-delete-{{ $ahli->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Pengesahan</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Adakah anda bersetuju untuk menghapuskan data
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-danger">Ya, Delete!</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
             </div>
         </div>
