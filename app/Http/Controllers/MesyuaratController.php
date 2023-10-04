@@ -42,7 +42,6 @@ class MesyuaratController extends Controller
             'masa_mula' => ['required', 'date_format:H:i'],
             'masa_tamat' => ['required'],
             'lokasi' => ['required'],
-            'ahli' => ['required'],
             'status' => ['required', 'in:aktif,batal,tunda,selesai'],
         ]);
 
@@ -71,7 +70,9 @@ class MesyuaratController extends Controller
      */
     public function edit(string $id)
     {
-        return view('mesyuarat.template-edit');
+        $mesyuarat = DB::table('mesyuarat')->where('id', '=', $id)->first(); // LIMIT 1
+
+        return view('mesyuarat.template-edit', compact('mesyuarat'));
     }
 
     /**
@@ -79,7 +80,20 @@ class MesyuaratController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'perkara' => 'required|min:3|string', // cara 1 penyediaan validation rules - guna tiang
+            'tarikh' => ['required', 'date'], // cara 2 penyediaan validation rules - guna array
+            'masa_mula' => ['required', 'date_format:H:i'],
+            'masa_tamat' => ['required'],
+            'lokasi' => ['required'],
+            'status' => ['required', 'in:aktif,batal,tunda,selesai'],
+        ]);
+
+        DB::table('mesyuarat')->where('id', '=', $id)->update($data);
+
+        // Redirect ke halaman senarai mesyuarat selepas proses kemaskini data.
+        return redirect()->route('mesyuarat.index')->with('mesej-sukses', 'Rekod berjaya dikemaskini');
+
     }
 
     /**
@@ -87,6 +101,10 @@ class MesyuaratController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Delete rekod berdasarkan ID data
+        DB::table('mesyuarat')->where('id', '=', $id)->delete();
+
+        // Redirect ke halaman senarai mesyuarat selepas delete rekod.
+        return redirect()->route('mesyuarat.index')->with('mesej-sukses', 'Rekod berjaya dihapuskan');
     }
 }

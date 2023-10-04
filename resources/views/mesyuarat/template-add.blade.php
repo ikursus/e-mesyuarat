@@ -54,11 +54,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label>AHLI TERLIBAT</label>
-                        <input type="text" name="ahli" class="form-control" value="{{ old('ahli') }}">
-                    </div>
-
-                    <div class="form-group">
                         <label>STATUS</label>
                         <select name="status" class="form-control">
                             <option value="">-- Sila Pilih --</option>

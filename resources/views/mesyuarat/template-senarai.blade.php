@@ -42,7 +42,36 @@
                             <td>
                                 <a href="{{ route('mesyuarat.show', $mesyuarat->id) }}" class="btn btn-primary">Detail</a>
                                 <a href="{{ route('mesyuarat.edit', $mesyuarat->id) }}" class="btn btn-warning">Edit</a>
-                                <button type="button" class="btn btn-danger">Delete</button>
+
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $mesyuarat->id }}">Delete</button>
+
+                                <!-- Modal Delete -->
+                                <form method="POST" action="{{ route('mesyuarat.destroy', $mesyuarat->id) }}">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <div class="modal fade" id="modal-delete-{{ $mesyuarat->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Pengesahan</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Adakah anda bersetuju untuk menghapuskan data {{ $mesyuarat->perkara }}
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-danger">Ya, Delete!</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+
                             </td>
                         </tr>
                         @endforeach
