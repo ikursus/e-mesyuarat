@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mesyuarat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,8 @@ class MesyuaratController extends Controller
     // }
     public function index()
     {
-        $senaraiMesyuarat = DB::table('mesyuarat')->orderBy('id', 'desc')->get();
+        // $senaraiMesyuarat = DB::table('mesyuarat')->orderBy('id', 'desc')->get();
+        $senaraiMesyuarat = Mesyuarat::orderBy('id', 'desc')->get();
 
         // dd($senaraiMesyuarat);
 

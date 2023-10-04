@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $senaraiUsers = User::all();
+        $senaraiUsers = User::get();
 
         return view('users.template-senarai', compact('senaraiUsers'));
     }
@@ -30,7 +30,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email:filter'],
+            'phone' => ['nullable', 'sometimes'],
+            'password' => ['required', 'min:3', 'confirmed']
+        ]);
+
+        // Cara 1 untuk simpan data ke table users menggunakan Model
+        // $user = new User;
+        // $user->name = $data['name']; // $request->input('name')
+        // $user->email = $data['email']; // $request->input('email')
+        // $user->phone = $data['phone']; // $request->input('phone')
+        // $user->password = $data['password']; // $request->input('password')
+        // $user->save();
+
+        // Cara 2 untuk simpan data ke table users menggunakan Model
+        User::create($data);
+
+        // Redirect ke halaman senarai mesyuarat selepas proses kemasukan data.
+        return redirect()->route('users.index')->with('mesej-sukses', 'Rekod berjaya disimpan');
     }
 
     /**
