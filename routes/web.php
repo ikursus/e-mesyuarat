@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\MesyuaratAhliController;
 use App\Http\Controllers\MesyuaratController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MesyuaratAhliController;
 
 Route::get('/', function () {
     return view('welcome'); // view()
@@ -35,4 +36,7 @@ Route::get('dashboard', DashboardController::class);
 // Route::get('mesyuarat', [MesyuaratController::class, 'senarai'])->name('mesyuarat.index');
 // Route::resource('mesyuarat', MesyuaratController::class)->except('index');
 Route::post('mesyuarat/{id}/ahli', [MesyuaratAhliController::class, 'store'])->name('mesyuarat.ahli.store');
+Route::delete('mesyuarat/{id}/ahli', [MesyuaratAhliController::class, 'destroy'])->name('mesyuarat.ahli.destroy');
 Route::resource('mesyuarat', MesyuaratController::class);
+
+Route::resource('users', UserController::class);

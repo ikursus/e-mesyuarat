@@ -8,22 +8,6 @@ use Illuminate\Support\Facades\DB;
 class MesyuaratAhliController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, $id)
@@ -31,6 +15,18 @@ class MesyuaratAhliController extends Controller
         $data = $request->validate([
             'user_id' => ['required', 'exists:users,id'] // validate data user wujud atau tidak dalam table users
         ]);
+
+        // buat semakan manual untuk pastikan user yang sama tidak lagi dimasukkan ke mesyuarat yang sama
+        $semakKewujudanAhli = DB::table('mesyuarat_user')
+                                ->where('mesyuarat_id', '=', $id)
+                                ->where('user_id', '=', $data['user_id'])
+                                ->count();
+
+        // Jika rekod user yang ingin dimasukkan kedalam meeting ini telahpun wujud, maka tolak kemasukan.
+        if ($semakKewujudanAhli > 0)
+        {
+            return redirect()->back()->with('mesej-gagal', 'Rekod ahli telah pun wujud dalam mesyuarat ini');
+        }
 
         // Attachkan data mesyuarat id ke $data
         $data['mesyuarat_id'] = $id;
@@ -42,34 +38,18 @@ class MesyuaratAhliController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        // $ahliUntukDelete = DB::table('mesyuarat_user')
+        //                     ->where('mesyuarat_id', '=', $id)
+        //                     ->where('user_id', '=', $request->input('user_id'))
+        //                     ->delete();
+        $ahliUntukDelete = DB::table('mesyuarat_user')
+                            ->where('id', '=', $request->input('mesyuarat_user_id'))
+                            ->delete();
+
+        return redirect()->back()->with('mesej-sukses', 'Ahli berjaya dikeluarkan');
     }
 }

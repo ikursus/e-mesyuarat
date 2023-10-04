@@ -66,7 +66,11 @@ class MesyuaratController extends Controller
         $senaraiAhli = DB::table('users')->select('id', 'name')->get();
 
         // Senarai ahli yang telah berdaftar
-        $senaraiAhliMesyuarat = DB::table('mesyuarat_user')->get();
+        $senaraiAhliMesyuarat = DB::table('mesyuarat_user')
+                                ->join('users', 'mesyuarat_user.user_id', '=', 'users.id')
+                                ->where('mesyuarat_user.mesyuarat_id', '=', $id)
+                                ->select('users.name As ahli_name', 'mesyuarat_user.id', 'mesyuarat_user.user_id')
+                                ->get();
 
         return view('mesyuarat.template-detail', compact('mesyuarat', 'senaraiAhli', 'senaraiAhliMesyuarat'));
     }
