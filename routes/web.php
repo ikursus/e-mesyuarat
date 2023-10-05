@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MesyuaratController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MesyuaratAhliController;
+use App\Http\Controllers\UserMesyuaratController;
 
 Route::get('/', function () {
     return view('welcome'); // view()
@@ -39,4 +40,6 @@ Route::post('mesyuarat/{id}/ahli', [MesyuaratAhliController::class, 'store'])->n
 Route::delete('mesyuarat/{id}/ahli', [MesyuaratAhliController::class, 'destroy'])->name('mesyuarat.ahli.destroy');
 Route::resource('mesyuarat', MesyuaratController::class);
 
+Route::post('users/{id}/mesyuarat', [UserMesyuaratController::class, 'store'])->name('users.mesyuarat.store');
+Route::delete('users/{id}/mesyuarat', [UserMesyuaratController::class, 'destroy'])->name('users.mesyuarat.destroy');
 Route::resource('users', UserController::class);

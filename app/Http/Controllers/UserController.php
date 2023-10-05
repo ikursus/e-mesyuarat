@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Mesyuarat;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -61,7 +62,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.template-detail', compact('user'));
+        $senaraiMesyuarat = Mesyuarat::whereIn('status', ['aktif', 'tunda']) //where('status', '=', 'aktif') // whereStatus('aktif')
+                            ->select('id', 'perkara', 'tarikh')
+                            ->get();
+
+        return view('users.template-detail', compact('user', 'senaraiMesyuarat'));
     }
 
     /**
@@ -112,8 +117,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
+    // public function destroy($id)
     {
-        //
+        // $user = User::find($id);
+        $user->delete();
+        // Redirect ke halaman senarai mesyuarat selepas proses kemaskini data.
+        return redirect()->route('users.index')->with('mesej-sukses', 'Rekod berjaya dihapuskan');
     }
 }

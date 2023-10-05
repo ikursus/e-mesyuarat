@@ -11,4 +11,9 @@ class Mesyuarat extends Model
 
     // Maklumkan nama table yang perlu Model ini hubungi
     protected $table = 'mesyuarat';
+
+    public function senaraiUsers()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

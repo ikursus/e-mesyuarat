@@ -64,26 +64,27 @@
                 </div>
 
                 <!-- Modal -->
-                <form method="POST" action="{{ route('mesyuarat.ahli.store', $user->id) }}">
+                <form method="POST" action="{{ route('users.mesyuarat.store', $user->id) }}">
                     @csrf
                     <div class="modal fade" id="tambah-ahli" tabindex="-1" aria-labelledby="tambah-ahliLabel" aria-hidden="true">
                         <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="tambah-ahliLabel">Modal title</h1>
+                            <h1 class="modal-title fs-5" id="tambah-ahliLabel">Mesyuarat</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
 
                                 <div class="form-group">
-                                    <label>Ahli</label>
-                                    <select class="form-control" name="user_id">
+                                    <label>Mesyuarat</label>
+                                    <select class="form-control" name="mesyuarat_id">
                                         <option value="">-- Sila Pilih --</option>
 
-                                        {{-- @foreach ($senaraiAhli as $ahli)
-                                        <option value="{{ $ahli->id }}">{{ $ahli->name }}</option>
-                                        @endforeach --}}
+                                        @foreach ($senaraiMesyuarat as $mesyuarat)
+                                        <option value="{{ $mesyuarat->id }}">{{ $mesyuarat->perkara }} (Tarikh: {{ $mesyuarat->tarikh }})</option>
+                                        @endforeach
                                     </select>
+
                                 </div>
 
                             </div>
@@ -101,12 +102,62 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>MESYUARAT</th>
+                            <th>PERKARA</th>
+                            <th>TARIKH</th>
+                            <th>MASA MULA</th>
+                            <th>MASA TAMAT</th>
+                            <th>LOKASI</th>
+                            <th>STATUS</th>
                             <th>TINDAKAN</th>
                         </tr>
                     </thead>
                     <tbody>
+                       @foreach ($user->senaraiMesyuarat as $mesyuarat)
 
+                       <tr>
+                        <td>{{ $mesyuarat->id }}</td>
+                        <td>{{ $mesyuarat->perkara }}</td>
+                        <td>{{ $mesyuarat->tarikh }}</td>
+                        <td>{{ $mesyuarat->masa_mula }}</td>
+                        <td>{{ $mesyuarat->masa_tamat }}</td>
+                        <td>{{ $mesyuarat->lokasi }}</td>
+                        <td>{{ $mesyuarat->status }}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $mesyuarat->id }}">Keluarkan</button>
+
+                            <!-- Modal Delete -->
+                            <form method="POST" action="{{ route('users.mesyuarat.destroy', $user->id) }}">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <input type="hidden" name="mesyuarat_id" value="{{ $mesyuarat->id }}">
+
+                                <div class="modal fade" id="modal-delete-{{ $mesyuarat->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pengesahan</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Adakah anda bersetuju untuk keluarkan {{ $user->name }} dari Mesyuarat {{ $mesyuarat->perkara }}
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger">Ya</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+
+                        </td>
+                    </tr>
+
+                       @endforeach
                     </tbody>
                 </table>
 

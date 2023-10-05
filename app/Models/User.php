@@ -43,4 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Relation user kepada mesyuarat menerusi pivot table mesyuarat_user
+    public function senaraiMesyuarat()
+    {
+        return $this->belongsToMany(Mesyuarat::class);
+    }
 }
