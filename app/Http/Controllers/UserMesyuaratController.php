@@ -29,8 +29,17 @@ class UserMesyuaratController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        // Cara 1 - Remove rekod relation mesyuarat daripada user
+        // MesyuaratUser::where('mesyuarat_id', '=', $request->input('mesyuarat_id'))
+        // ->where('user_id', '=', $id)
+        // ->delete();
+
+        // Cara 2 - Menggunakan kaedah relation
+        $user = User::find($id);
+        $user->senaraiMesyuarat()->detach($request->input('mesyuarat_id'));
+
+        return redirect()->back()->with('mesej-sukses', 'Mesyuarat berjaya dikeluarkan daripada user ini');
     }
 }

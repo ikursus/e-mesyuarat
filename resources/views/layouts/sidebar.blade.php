@@ -37,7 +37,7 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                 Profile
             </a>
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="{{ route('logout') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-sign-out"></i></div>
                 Logout
             </a>
@@ -45,6 +45,6 @@
     </div>
     <div class="sb-sidenav-footer">
         <div class="small">Logged in as:</div>
-        Start Bootstrap
+        {{ auth()->user()->name }}
     </div>
 </nav>

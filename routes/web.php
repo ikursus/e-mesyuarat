@@ -20,9 +20,16 @@ Route::get('/login', [LoginController::class, 'borangLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'checkLogin'])->name('login.check');
 // Tamat route terima data dari borang login
 
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('dashboard', DashboardController::class);
 
+// Route::middleware('auth')->group(function() {
+
+// });
+
+Route::group(['middleware' => 'auth'], function() {
+
+    Route::get('dashboard', DashboardController::class);
 
 // Route::get('mesyuarat', [MesyuaratController::class, 'index'])->name('mesyuarat.index');
 // Route::get('mesyuarat/new', [MesyuaratController::class, 'create'])->name('mesyuarat.create');
@@ -43,3 +50,6 @@ Route::resource('mesyuarat', MesyuaratController::class);
 Route::post('users/{id}/mesyuarat', [UserMesyuaratController::class, 'store'])->name('users.mesyuarat.store');
 Route::delete('users/{id}/mesyuarat', [UserMesyuaratController::class, 'destroy'])->name('users.mesyuarat.destroy');
 Route::resource('users', UserController::class);
+
+
+});

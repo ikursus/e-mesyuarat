@@ -47,6 +47,17 @@ class User extends Authenticatable
     // Relation user kepada mesyuarat menerusi pivot table mesyuarat_user
     public function senaraiMesyuarat()
     {
+        // Jika tidak menggunakan nama pivot table mengikut ejaan singular kepada nama table relation
+        // maka perlu declare nama pivot tersebut seperti berikut:
+        // return $this->belongsToMany(Mesyuarat::class, 'nama_pivot_table');
+
+        // Jika mengikut best practice laravel dalam pemberian nama pivot, maka tak perlu declare
         return $this->belongsToMany(Mesyuarat::class);
     }
+
+    // public function meeting()
+    // {
+    //     return $this->hasOne(Mesyuarat::class, 'mesyuaratId', 'uid');
+    //     return $this->belongsTo(Mesyuarat::class);
+    // }
 }
