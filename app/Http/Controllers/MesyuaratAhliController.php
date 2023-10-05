@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Mesyuarat;
 use Illuminate\Http\Request;
+use App\Mail\JemputanMesyuarat;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class MesyuaratAhliController extends Controller
 {
@@ -33,6 +37,14 @@ class MesyuaratAhliController extends Controller
 
         // Simpan data ke dalam table pivot mesyuarat_user
         DB::table('mesyuarat_user')->insert($data);
+
+        // Dapatkan maklumat mesyuarat
+        $mesyuarat = Mesyuarat::find($id);
+        $user = User::find($data['user_id']);
+
+        // Hantar Email maklumat jemputan mesyuarat kepada user
+        // Mail::to($user->email)->send(new JemputanMesyuarat($user, $mesyuarat));
+        Mail::to($user->email)->queue(new JemputanMesyuarat($user, $mesyuarat));
 
         return redirect()->back()->with('mesej-sukses', 'Ahli berjaya ditambah');
     }

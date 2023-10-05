@@ -7,6 +7,7 @@ use App\Http\Controllers\MesyuaratController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MesyuaratAhliController;
 use App\Http\Controllers\UserMesyuaratController;
+use App\Http\Controllers\MesyuaratPrintController;
 
 Route::get('/', function () {
     return view('welcome'); // view()
@@ -43,6 +44,7 @@ Route::group(['middleware' => 'auth'], function() {
 // berada di atas route resource supaya function tersebut tidak di overwrite oleh resource
 // Route::get('mesyuarat', [MesyuaratController::class, 'senarai'])->name('mesyuarat.index');
 // Route::resource('mesyuarat', MesyuaratController::class)->except('index');
+Route::get('mesyuarat/{id}/pdf', [MesyuaratPrintController::class, 'index'])->name('mesyuarat.print.index');
 Route::post('mesyuarat/{id}/ahli', [MesyuaratAhliController::class, 'store'])->name('mesyuarat.ahli.store');
 Route::delete('mesyuarat/{id}/ahli', [MesyuaratAhliController::class, 'destroy'])->name('mesyuarat.ahli.destroy');
 Route::resource('mesyuarat', MesyuaratController::class);

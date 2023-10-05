@@ -53,6 +53,13 @@
                                 <td>STATUS</td>
                                 <td>{{ $mesyuarat->status }}</td>
                             </tr>
+                            <tr>
+                                <td>CETAK</td>
+                                <td>
+                                    <a href="{{ route('mesyuarat.print.index', $mesyuarat->id) }}" class="btn btn-primary" target="_blank">Buka Di Browser</a>
+                                    <a href="{{ route('mesyuarat.print.index', $mesyuarat->id) }}?jenis=download" class="btn btn-warning">Download PDF</a>
+                                </td>
+                            </tr>
 
                         </tbody>
 
